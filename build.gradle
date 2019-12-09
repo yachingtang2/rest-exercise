@@ -13,11 +13,20 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.boot:spring-boot-starter-actuator")
+	compile('org.springframework.boot:spring-boot-devtools')
 	testCompile("junit:junit")
 	testCompile("org.springframework.boot:spring-boot-starter-test")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 //	implementation 'org.springframework.boot:spring-boot-starter'
 //	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 //		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -26,4 +35,13 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+apply plugin: 'idea'
+
+idea {
+	module {
+		inheritOutputDirs = false
+		outputDir = file("$buildDir/classes/main/")
+	}
 }

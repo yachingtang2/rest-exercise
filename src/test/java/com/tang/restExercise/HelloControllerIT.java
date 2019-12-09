@@ -30,12 +30,19 @@ public class HelloControllerIT {
 
   @Before
   public void setUp() throws MalformedURLException {
-    this.base = new URL("http://localhost:" + port + "/");
+    this.base = new URL("http://localhost:" + port + "/hello");
   }
 
   @Test
   public void getHello() {
     ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-    assertThat(response.getBody(), is("Greeting from Spring Boot!"));
+    assertThat(response.getBody(), is("Greeting from Spring Boot! YCT"));
+  }
+
+  @Test
+  public void getYCT() throws MalformedURLException {
+    this.base = new URL("http://localhost:" + port + "/yct");
+    ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
+    assertThat(response.getBody(), is("Greeting from Spring Boot! YCT"));
   }
 }
